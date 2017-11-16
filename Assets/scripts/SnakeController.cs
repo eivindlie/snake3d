@@ -8,7 +8,7 @@ public class SnakeController : MonoBehaviour {
 
     public GameObject mainCamera;
     public List<GameObject> segments;
-    public Vector3 direction = new Vector3(0, 0, 0);
+    public Direction direction = Direction.FORWARD;
     public GameObject segmentPrefab;
     public LevelController level;
 
@@ -44,20 +44,25 @@ public class SnakeController : MonoBehaviour {
     {
         if (Input.GetKeyDown("left"))
         {
-            direction = new Vector3(0, -1, 0);
+            direction = Direction.LEFT;
         }
         else if (Input.GetKeyDown("right"))
         {
-            direction = new Vector3(0, 1, 0);
+            direction = Direction.RIGHT;
         }
         else if (Input.GetKeyDown("down"))
         {
-            direction = new Vector3(1, 0, 0);
+            direction = Direction.DOWN;
         }
         else if (Input.GetKeyDown("up"))
         {
-            direction = new Vector3(-1, 0, 0);
+            direction = Direction.UP;
         }
+    }
+
+    private Vector3 RightAnglify(Vector3 vec)
+    {
+        return new Vector3(Mathf.Round(vec.x), Mathf.Round(vec.y), Mathf.Round(vec.z));
     }
 
     private void Move()
@@ -72,25 +77,46 @@ public class SnakeController : MonoBehaviour {
         {
             segments[i].transform.position = segments[i - 1].transform.position;
         }
-        if (direction.magnitude > 0)
+
+        var vertical = segments[0].transform.forward.y != 0;
+        Vector3 forward = new Vector3(0, 0, 0);
+        Vector3 up = RightAnglify(mainCamera.transform.up);
+        switch (direction)
         {
-            if(segments[0].transform.eulerAngles.x != 0)
-            {
-                if (direction.x == -1)
+            case Direction.UP:
+                if (vertical)
                 {
-                    direction = new Vector3(0, 0, 0);
+                    forward = RightAnglify(mainCamera.transform.forward);
                 }
-                else if(direction.x == 1)
+                else
                 {
-                    direction = new Vector3(2, 0, 0);
+                    forward = RightAnglify(mainCamera.transform.up);
+                    up = RightAnglify(-mainCamera.transform.forward);
                 }
-            } 
-            var camDir = mainCamera.transform.eulerAngles;
-            camDir = new Vector3(Mathf.Round(camDir.x / 90) * 90, Mathf.Round(camDir.y / 90) * 90, Mathf.Round(camDir.z / 90) * 90);
-            segments[0].transform.eulerAngles = camDir + direction * 90;
-            direction = new Vector3(0, 0, 0);
+                break;
+            case Direction.DOWN:
+                if(vertical)
+                {
+                    forward = RightAnglify(-mainCamera.transform.forward);
+                }
+                else
+                {
+                    forward = RightAnglify(-mainCamera.transform.up);
+                    up = RightAnglify(mainCamera.transform.forward);
+                }
+                break;
+            case Direction.LEFT:
+                forward = RightAnglify(-mainCamera.transform.right);
+                break;
+            case Direction.RIGHT:
+                forward = RightAnglify(mainCamera.transform.right);
+                break;
         }
+        if(forward.magnitude != 0)
+            segments[0].transform.rotation = Quaternion.LookRotation(forward, up);
         segments[0].transform.position += segments[0].transform.forward;
+
+        direction = Direction.FORWARD;
     }
 
     private void CheckCollision()
@@ -123,5 +149,10 @@ public class SnakeController : MonoBehaviour {
                 }
             }
         }
+    }
+
+    public enum Direction
+    {
+        UP, DOWN, LEFT, RIGHT, FORWARD
     }
 }
