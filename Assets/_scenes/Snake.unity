@@ -721,6 +721,7 @@ MonoBehaviour:
   direction: {x: 0, y: 0, z: 0}
   segmentPrefab: {fileID: 1900608537099292, guid: 58a5c09f439ef3043a68d1602dddf3ab,
     type: 2}
+  level: {fileID: 1220877933}
 --- !u!4 &1469851744
 Transform:
   m_ObjectHideFlags: 0

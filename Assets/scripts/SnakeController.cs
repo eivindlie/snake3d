@@ -10,6 +10,7 @@ public class SnakeController : MonoBehaviour {
     public List<GameObject> segments;
     public Vector3 direction = new Vector3(0, 0, 0);
     public GameObject segmentPrefab;
+    public LevelController level;
 
     private Stopwatch stopwatch;
     private int eatenApples = 0;
@@ -32,6 +33,11 @@ public class SnakeController : MonoBehaviour {
             stopwatch.Start();
             Move();
         }
+    }
+
+    private void LateUpdate()
+    {
+        CheckCollision();
     }
 
     private void SetDirection()
@@ -87,16 +93,34 @@ public class SnakeController : MonoBehaviour {
         segments[0].transform.position += segments[0].transform.forward;
     }
 
-    internal void CheckCollision(List<SnakeController> snakes, List<GameObject> apples, List<GameObject> blocks)
+    private void CheckCollision()
     {
-        foreach (var apple in apples)
+        foreach (var apple in level.apples)
         {
             if (apple.transform.position == segments[0].transform.position)
             {
-                apples.Remove(apple);
+                level.apples.Remove(apple);
                 UnityEngine.Object.Destroy(apple);
                 eatenApples++;
                 break;
+            }
+        }
+
+        if (! (new Bounds(new Vector3(-0.5f, -0.5f, -0.5f), level.size * 2).Contains(segments[0].transform.position)))
+        {
+            UnityEngine.Debug.Log("Game Over 1! Final Score: " + segments.Count);
+            Application.Quit();
+        }
+
+        foreach(var snake in level.snakes)
+        {
+            foreach (var segment in snake.segments)
+            {
+                if (segment != segments[0] && segment.transform.position == segments[0].transform.position)
+                {
+                    UnityEngine.Debug.Log("Game Over 2! Final Score: " + segments.Count);
+                    Application.Quit();
+                }
             }
         }
     }

@@ -39,10 +39,6 @@ public class LevelController : MonoBehaviour {
 
 	void LateUpdate ()
     {
-        foreach (var snake in snakes)
-        {
-            snake.CheckCollision(snakes, apples, blocks);
-        }
         SpawnApples();
 	}
 
