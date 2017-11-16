@@ -595,7 +595,7 @@ MonoBehaviour:
   eastWall: {fileID: 1302349203}
   northWall: {fileID: 1550083164}
   southWall: {fileID: 1009910775}
-  numApples: 20
+  numApples: 50
   applePrefab: {fileID: 1877381046413438, guid: 30411e1ece60dc340b58f688cdb75379,
     type: 2}
   snakes:
@@ -718,7 +718,7 @@ MonoBehaviour:
   mainCamera: {fileID: 1135264452}
   segments:
   - {fileID: 1552673121}
-  direction: {x: 0, y: 0, z: 0}
+  direction: 4
   segmentPrefab: {fileID: 1900608537099292, guid: 58a5c09f439ef3043a68d1602dddf3ab,
     type: 2}
   level: {fileID: 1220877933}

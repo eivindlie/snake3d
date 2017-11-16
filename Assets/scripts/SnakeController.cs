@@ -42,19 +42,19 @@ public class SnakeController : MonoBehaviour {
 
     private void SetDirection()
     {
-        if (Input.GetKeyDown("left"))
+        if (Input.GetButtonDown("Left"))
         {
             direction = Direction.LEFT;
         }
-        else if (Input.GetKeyDown("right"))
+        else if (Input.GetButtonDown("Right"))
         {
             direction = Direction.RIGHT;
         }
-        else if (Input.GetKeyDown("down"))
+        else if (Input.GetButtonDown("Down"))
         {
             direction = Direction.DOWN;
         }
-        else if (Input.GetKeyDown("up"))
+        else if (Input.GetButtonDown("Up"))
         {
             direction = Direction.UP;
         }
