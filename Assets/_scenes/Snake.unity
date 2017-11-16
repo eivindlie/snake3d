@@ -715,7 +715,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3fbc939ea7e7674fb87c3717f93b993, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 1135264452}
+  mainCamera: {fileID: 1135264452}
   segments:
   - {fileID: 1552673121}
   direction: {x: 0, y: 0, z: 0}
