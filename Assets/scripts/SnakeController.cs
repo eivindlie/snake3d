@@ -62,7 +62,11 @@ public class SnakeController : MonoBehaviour {
 
     private Vector3 RightAnglify(Vector3 vec)
     {
-        return new Vector3(Mathf.Round(vec.x), Mathf.Round(vec.y), Mathf.Round(vec.z));
+        var vec2 = new Vector3(0, 0, 0);
+        if (Math.Abs(vec.y) > Math.Abs(vec.z) && Math.Abs(vec.y) > Math.Abs(vec.x)) vec2.y = vec.y;
+        else if (Math.Abs(vec.z) > Math.Abs(vec.x)) vec2.z = vec.z;
+        else vec2.x = vec.x;
+        return vec2;
     }
 
     private void Move()
