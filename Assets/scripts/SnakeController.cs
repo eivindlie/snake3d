@@ -16,6 +16,9 @@ public class SnakeController : MonoBehaviour {
     private Stopwatch stopwatch;
     private int eatenApples = 0;
 
+    private float lastHor = 0, lastVert = 0;
+    private float movementLimit = 0.2f;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -50,28 +53,28 @@ public class SnakeController : MonoBehaviour {
 
     private void SetDirection()
     {
-        if (CrossPlatformInputManager.GetButtonDown("Horizontal"))
+        var hor = CrossPlatformInputManager.GetAxis("Horizontal");
+        var vert = CrossPlatformInputManager.GetAxis("Vertical");
+
+        if (hor > movementLimit && lastHor <= movementLimit)
         {
-            if (CrossPlatformInputManager.GetAxis("Horizontal") > 0)
-            {
-                direction = Direction.RIGHT;
-            }
-            else
-            {
-                direction = Direction.LEFT;
-            }
-        }
-        else if (CrossPlatformInputManager.GetButtonDown("Vertical"))
+            direction = Direction.RIGHT;
+        } 
+        else if (hor < -movementLimit && lastHor >= -movementLimit)
         {
-            if (CrossPlatformInputManager.GetAxis("Vertical") > 0)
-            {
-                direction = Direction.UP;
-            }
-            else
-            {
-                direction = Direction.DOWN;
-            }
+            direction = Direction.LEFT;
         }
+        else if (vert > movementLimit && lastVert <= movementLimit)
+        {
+            direction = Direction.UP;
+        }
+        else if (vert < -movementLimit && lastVert >= -movementLimit)
+        {
+            direction = Direction.DOWN;
+        }
+
+        lastHor = hor;
+        lastVert = vert;
     }
 
     private Vector3 RightAnglify(Vector3 vec)
