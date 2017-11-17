@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelController : MonoBehaviour {
 
@@ -10,6 +11,10 @@ public class LevelController : MonoBehaviour {
     public int numApples = 3;
 
     public GameObject applePrefab;
+    public SnakeController snakePrefab;
+    public GameController gameController;
+    public SnakeController playerSnake;
+    public Camera mainCamera;
 
     public List<SnakeController> snakes;
     public List<GameObject> apples;
@@ -17,7 +22,8 @@ public class LevelController : MonoBehaviour {
 
     void Start ()
     {
-        Create(size);	
+        Create(size);
+        playerSnake = snakes[0];
 	}
 
     public void Create(Vector3 size)
@@ -35,6 +41,12 @@ public class LevelController : MonoBehaviour {
         southWall.transform.localScale = new Vector3(size.z/10, 1, size.y / 10);
         northWall.transform.position = new Vector3(size.x - 0.5f + 0.0001f, 0 - 0.5f, 0 - 0.5f);
         northWall.transform.localScale = new Vector3(size.z / 10, 1, size.y / 10);
+
+        playerSnake = Instantiate(snakePrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        playerSnake.level = this;
+        playerSnake.mainCamera = mainCamera;
+        mainCamera.GetComponent<FollowCamera>().target = playerSnake.segments[0];
+        snakes.Add(playerSnake);
     }
 
 	void LateUpdate ()
@@ -77,5 +89,10 @@ public class LevelController : MonoBehaviour {
 
             OUTER_CONTINUE: ;
         }
+    }
+
+    public void GameOver()
+    {
+        gameController.GameOver();
     }
 }

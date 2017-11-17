@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class SnakeController : MonoBehaviour {
 
-    public GameObject mainCamera;
+    public Camera mainCamera;
     public List<GameObject> segments;
     public Direction direction = Direction.FORWARD;
     public GameObject segmentPrefab;
@@ -25,6 +25,7 @@ public class SnakeController : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        if (Time.timeScale == 0) return;
         SetDirection();
 
         if (stopwatch.ElapsedMilliseconds > 1000/8)
@@ -37,6 +38,7 @@ public class SnakeController : MonoBehaviour {
 
     private void LateUpdate()
     {
+        if (Time.timeScale == 0) return;
         CheckCollision();
     }
 
@@ -138,8 +140,7 @@ public class SnakeController : MonoBehaviour {
 
         if (! (new Bounds(new Vector3(-0.5f, -0.5f, -0.5f), level.size * 2).Contains(segments[0].transform.position)))
         {
-            UnityEngine.Debug.Log("Game Over 1! Final Score: " + segments.Count);
-            Application.Quit();
+            level.GameOver();
         }
 
         foreach(var snake in level.snakes)
@@ -148,8 +149,7 @@ public class SnakeController : MonoBehaviour {
             {
                 if (segment != segments[0] && segment.transform.position == segments[0].transform.position)
                 {
-                    UnityEngine.Debug.Log("Game Over 2! Final Score: " + segments.Count);
-                    Application.Quit();
+                    level.GameOver();
                 }
             }
         }

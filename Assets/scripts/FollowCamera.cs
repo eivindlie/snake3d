@@ -8,11 +8,13 @@ public class FollowCamera : MonoBehaviour
 
     void Start()
     {
-        offset = target.transform.position - transform.position;
+        
     }
 
     void LateUpdate()
     {
+        if (target == null) return;
+        if (offset.magnitude == 0) offset = target.transform.position - transform.position;
         float currentY = transform.eulerAngles.y;
         float desiredY = target.transform.eulerAngles.y;
         float y = Mathf.LerpAngle(currentY, desiredY, Time.deltaTime * damping);
