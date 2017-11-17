@@ -143,6 +143,14 @@ public class SnakeController : MonoBehaviour {
             }
         }
 
+        foreach (var block in level.blocks)
+        {
+            if (block.transform.position == segments[0].transform.position)
+            {
+                level.GameOver();
+            }
+        }
+
         if (! (new Bounds(new Vector3(-0.5f, -0.5f, -0.5f), level.size * 2).Contains(segments[0].transform.position)))
         {
             level.GameOver();

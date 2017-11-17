@@ -992,6 +992,8 @@ MonoBehaviour:
     type: 2}
   snakePrefab: {fileID: 114723131636531690, guid: 9480141f0ba0cd340b6ba5535dda51bf,
     type: 2}
+  blockPrefab: {fileID: 1072566078007340, guid: 717bc3dc7f5f4a34dbd1c2ef140650b2,
+    type: 2}
   gameController: {fileID: 1247269654}
   playerSnake: {fileID: 0}
   mainCamera: {fileID: 1135264455}

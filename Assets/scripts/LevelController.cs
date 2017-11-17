@@ -12,6 +12,8 @@ public class LevelController : MonoBehaviour {
 
     public GameObject applePrefab;
     public SnakeController snakePrefab;
+    public GameObject blockPrefab;
+
     public GameController gameController;
     public SnakeController playerSnake;
     public Camera mainCamera;
@@ -56,6 +58,40 @@ public class LevelController : MonoBehaviour {
         mainCamera.GetComponent<FollowCamera>().target = playerSnake.segments[0];
         mainCamera.GetComponent<FollowCamera>().SnapToTarget();
         snakes.Add(playerSnake);
+
+        var random = new System.Random();
+        while (blocks.Count < 20)
+        {
+            var x = random.Next((int)-size.x, (int)size.x);
+            var y = random.Next((int)-size.y, (int)size.y);
+            var z = random.Next((int)-size.z, (int)size.z);
+
+            foreach (GameObject apple in apples)
+            {
+                if (Math.Floor(apple.transform.position.x) == x && Math.Floor(apple.transform.position.y) == y && Math.Floor(apple.transform.position.z) == z)
+                    goto OUTER_CONTINUE;
+            }
+
+            foreach (GameObject block in blocks)
+            {
+                if (Math.Floor(block.transform.position.x) == x && Math.Floor(block.transform.position.y) == y && Math.Floor(block.transform.position.z) == z)
+                    goto OUTER_CONTINUE;
+            }
+
+            foreach (SnakeController snake in snakes)
+            {
+                foreach (GameObject segment in snake.segments)
+                {
+                    if (Math.Floor(segment.transform.position.x) == x && Math.Floor(segment.transform.position.y) == y && Math.Floor(segment.transform.position.z) == z)
+                        goto OUTER_CONTINUE;
+                }
+            }
+
+            var newBlock = Instantiate(blockPrefab, new Vector3(x, y, z), Quaternion.identity);
+            blocks.Add(newBlock);
+
+            OUTER_CONTINUE:;
+        }
     }
 
 	void LateUpdate ()
