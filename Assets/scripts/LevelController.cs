@@ -23,17 +23,17 @@ public class LevelController : MonoBehaviour {
     public void Create(Vector3 size)
     {
         this.size = size;
-        ground.transform.position = new Vector3(0 - 0.5f, -size.y - 0.5f, 0 - 0.5f);
+        ground.transform.position = new Vector3(0 - 0.5f, -size.y - 0.5f - 0.0001f, 0 - 0.5f);
         ground.transform.localScale = new Vector3(size.x / 10, 1, size.z / 10);
-        roof.transform.position = new Vector3(0 - 0.5f, size.y - 0.5f, 0 - 0.5f);
+        roof.transform.position = new Vector3(0 - 0.5f, size.y - 0.5f + 0.0001f, 0 - 0.5f);
         roof.transform.localScale = new Vector3(size.x / 10, 1, size.z / 10);
-        westWall.transform.position = new Vector3(0 - 0.5f, 0 - 0.5f, -size.z - 0.5f);
+        westWall.transform.position = new Vector3(0 - 0.5f, 0 - 0.5f, -size.z - 0.5f - 0.0001f);
         westWall.transform.localScale = new Vector3(size.x / 10, 1, size.y / 10);
-        eastWall.transform.position = new Vector3(0 - 0.5f, 0 - 0.5f, size.z - 0.5f);
+        eastWall.transform.position = new Vector3(0 - 0.5f, 0 - 0.5f, size.z - 0.5f + 0.0001f);
         eastWall.transform.localScale = new Vector3(size.x / 10, 1, size.y / 10);
-        southWall.transform.position = new Vector3(-size.x - 0.5f, 0 - 0.5f, 0 - 0.5f);
+        southWall.transform.position = new Vector3(-size.x - 0.5f - 0.0001f, 0 - 0.5f, 0 - 0.5f);
         southWall.transform.localScale = new Vector3(size.z/10, 1, size.y / 10);
-        northWall.transform.position = new Vector3(size.x - 0.5f, 0 - 0.5f, 0 - 0.5f);
+        northWall.transform.position = new Vector3(size.x - 0.5f + 0.0001f, 0 - 0.5f, 0 - 0.5f);
         northWall.transform.localScale = new Vector3(size.z / 10, 1, size.y / 10);
     }
 
