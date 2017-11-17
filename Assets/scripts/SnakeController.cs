@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class SnakeController : MonoBehaviour {
 
@@ -49,21 +50,27 @@ public class SnakeController : MonoBehaviour {
 
     private void SetDirection()
     {
-        if (Input.GetButtonDown("Left"))
+        if (CrossPlatformInputManager.GetButtonDown("Horizontal"))
         {
-            direction = Direction.LEFT;
+            if (CrossPlatformInputManager.GetAxis("Horizontal") > 0)
+            {
+                direction = Direction.RIGHT;
+            }
+            else
+            {
+                direction = Direction.LEFT;
+            }
         }
-        else if (Input.GetButtonDown("Right"))
+        else if (CrossPlatformInputManager.GetButtonDown("Vertical"))
         {
-            direction = Direction.RIGHT;
-        }
-        else if (Input.GetButtonDown("Down"))
-        {
-            direction = Direction.DOWN;
-        }
-        else if (Input.GetButtonDown("Up"))
-        {
-            direction = Direction.UP;
+            if (CrossPlatformInputManager.GetAxis("Vertical") > 0)
+            {
+                direction = Direction.UP;
+            }
+            else
+            {
+                direction = Direction.DOWN;
+            }
         }
     }
 
