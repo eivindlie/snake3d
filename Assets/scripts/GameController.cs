@@ -29,8 +29,8 @@ public class GameController : MonoBehaviour {
 
     public void Restart()
     {
-        gameOverScreen.SetActive(false);
         level.Create(level.size);
+        gameOverScreen.SetActive(false);
         Time.timeScale = 1;
     }
 }

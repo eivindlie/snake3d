@@ -24,4 +24,16 @@ public class FollowCamera : MonoBehaviour
 
         transform.LookAt(target.transform);
     }
+
+    public void SnapToTarget()
+    {
+        if (target == null) return;
+        if (offset.magnitude == 0) offset = target.transform.position - transform.position;
+        float desiredY = target.transform.eulerAngles.y;
+
+        Quaternion rotation = Quaternion.Euler(0, desiredY, 0);
+        transform.position = target.transform.position - (rotation * offset);
+
+        transform.LookAt(target.transform);
+    }
 }

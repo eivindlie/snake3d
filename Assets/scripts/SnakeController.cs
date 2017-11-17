@@ -36,6 +36,11 @@ public class SnakeController : MonoBehaviour {
         }
     }
 
+    private void OnDestroy()
+    {
+        foreach (var segment in segments) Destroy(segment);
+    }
+
     private void LateUpdate()
     {
         if (Time.timeScale == 0) return;

@@ -42,10 +42,19 @@ public class LevelController : MonoBehaviour {
         northWall.transform.position = new Vector3(size.x - 0.5f + 0.0001f, 0 - 0.5f, 0 - 0.5f);
         northWall.transform.localScale = new Vector3(size.z / 10, 1, size.y / 10);
 
+        foreach (var apple in apples) Destroy(apple);
+        foreach (var block in blocks) Destroy(block);
+        foreach (var snake in snakes) Destroy(snake);
+
+        apples = new List<GameObject>();
+        blocks = new List<GameObject>();
+        snakes = new List<SnakeController>();
+
         playerSnake = Instantiate(snakePrefab, new Vector3(0, 0, 0), Quaternion.identity);
         playerSnake.level = this;
         playerSnake.mainCamera = mainCamera;
         mainCamera.GetComponent<FollowCamera>().target = playerSnake.segments[0];
+        mainCamera.GetComponent<FollowCamera>().SnapToTarget();
         snakes.Add(playerSnake);
     }
 
